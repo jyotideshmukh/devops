@@ -9,3 +9,63 @@ docker ps
 
 #list commit ids of all running docker processes including hidden
 docker ps -aq
+
+#how to create image manually with using commands
+docker pull ubuntu
+docker run -it ubuntu #run the ubuntu image in intercative mode
+#it will run and enter into container
+root@<container_id>:/#
+#update pakgs as
+apt-get install
+apt-get install nginx vim
+cd /var/www/html
+vi index.nginx-debian.html    #do some changes in file and save the file,wq!
+ctrl+pq #to come outside of container
+docker ps # see all docker containers
+
+#create new image from ubuntu and nginx
+docker commit -m "nginx with ubuntu" 1ede13f0950d jyotinginx:v1
+
+#if I run container only using docker run as , it will just run and will exit
+docker run jyotinginx:v1
+
+#above command will not list in docker ps as its exited
+CONTAINER ID   IMAGE                                COMMAND                  CREATED         STATUS                      PORTS                                                                        NAMES
+f539c49ffb6a   jyotinginx:v1                        "bash"                   7 seconds ago   Exited (0) 6 seconds ago
+
+#to run above conatiner continuously we need to give some command, so need create image again
+docker commit -m "nginx with ubuntu" -c 'CMD /usr/sbin/nginx -g "daemon off;"' -c 'EXPOSE 80' 1ede13f0950d jyotinginx:v2
+
+#Run the newly created image
+docker run -d -P jyotinginx:v2
+
+#see the port on which above image running
+docker ps
+
+#output is
+CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS                  PORTS                                                                        NAMES
+976bad35bc56   jyotinginx:v2          "/bin/sh -c '/usr/sb…"   43 seconds ago   Up 41 seconds           0.0.0.0:55000->80/tcp                                                        gallant_perlman
+
+Run the Url
+http://localhost:55000/
+
+#how to create image with automation script
+vi Dockerfile
+
+#content for Dockerfile as ***********
+From ubuntu:latest
+
+RUN apt-get update
+RUN apt-get install -y nginx vim
+RUN rm /var/www/html/*
+RUN echo "<H1> Jyoti's image created using Dockerfile- Ubuntu and Nginx</H1>" > /var/www/html/index.html
+
+CMD /usr/sbin/nginx -g "daemon off;"
+EXPOSE 80
+
+#then build image
+docker build -t jyotingnixauto:v1 .
+
+
+
+
