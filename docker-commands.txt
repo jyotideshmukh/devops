@@ -1,0 +1,11 @@
+#list images
+docker images 
+
+#to pull image
+docker pull ubuntu
+
+#list all running docker process
+docker ps
+
+#list commit ids of all running docker processes including hidden
+docker ps -aq
