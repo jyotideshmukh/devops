@@ -1,0 +1,66 @@
+#docker swarm is orchestation tool (swarm -cluster)
+
+#create three machines
+#in one machine init docker swarm
+docker swarm init
+#this machine become manager and displys message
+docker swarm join  --token <token> <ip>:2377
+
+#run above commands on the other nodes
+
+#see attched nodes to docker swarm
+docker node ls
+
+
+#create docker service
+docker service create --name jyotiservice --replicas 5 -p 1234:80 nginx
+
+#list docker services
+docker service ls
+
+#see, how these containers created on diff machines
+docker service ps jyotiservice
+
+#it shows number of containers created in diff machines
+
+#if we stop docker service on one of the worker or removed containers 
+   from one of the machine then also docker manager maintains count 
+   and generates nodes
+
+#how to stop docker service
+service docker stop
+
+
+#how to start docker service
+service docker start
+
+
+#how to scale running service
+docker service scale jyotiservice=8
+
+
+#remove service
+docker service rm jyotiservice
+
+#create loadbancing service, 
+    here is 1234 is port of service or cluster - its not for one single machine
+docker service create --name loadbal --replicas 3 -p 1234:3000 lerndevops/samplepyapp:v1
+
+#we can lable nodes as property to special identification, in below example label added as color=blue
+docker node update --label-add color=blue <node_id>
+
+#we can inspect this label using docker inspect <node_id>
+
+#while creating service we can specify constraint according label, conditions needs to be added with ==
+
+docker service create --name loadbal --replicas 3 -p 1234:3000 --constraint node.labels.color==blue lerndevops/samplepyapp:v1
+
+#disadvantages of docker swarm -- till now we used only one image, what if we need to run multiple images
+
+
+
+Docker stack is solution for scaling with multiple images
+=========================================================
+
+
+

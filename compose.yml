@@ -12,3 +12,5 @@ services:
     volumes:
       - /Users/jyotipawar/docker-practice/docker/data:/data/db
       - /Users/jyotipawar/docker-practice/docker/data-bkp:/data/bkp
+
+      
