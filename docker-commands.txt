@@ -243,6 +243,22 @@ Stopping docker-practice_webserver_1 ... done
 Removing docker-practice_webserver_2 ... done
 Removing docker-practice_webserver_1 ... done
 
+#docker-compose using another filename other than docker-compose.yml
+docker-compose -f compose.yml up -d
+
+#create 2 records on form
+#then delete the containers anad again start it
+docker-compose down OR docker stop `docker ps -aq`
+
+#then again start
+#though containers deleted you can get database as volumes are attached to database 
+
+docker-compose -f compose.yml up -d  
+
+#docker compose runs only one machine so scaling is really not useful 
+#as if host machine goes down all app will down
+
+
 
 
 
