@@ -153,5 +153,91 @@ jyotideshmukh/ubuntunginx   v1        45fb2ed434a9   2 hours ago   229MB
 docker run -d -P jyotideshmukh/ubuntunginx:v1
 
 
+#docker volumes are to keep some content on host machines like log, database etc
+
+#display volumes on host machines
+docker volume ls
+
+
+#docker inspect to inspect image , volume
+docker inspect <imageid>
+docker inspect <volumeid>
+
+#how to create volume
+docker volume create volumebyjyoti
+
+#how dockur volume looks like
+docker inspect volumebyjyoti
+[
+    {
+        "CreatedAt": "2022-10-05T12:25:04Z",
+        "Driver": "local",
+        "Labels": {},
+        "Mountpoint": "/var/lib/docker/volumes/volumebyjyoti/_data",
+        "Name": "volumebyjyoti",
+        "Options": {},
+        "Scope": "local"
+    }
+]
+
+#created image to test apache log
+docker build -t apachelogvolume:v1 -f volumeapachelog .
+
+#you can save logs , database data etc on host machine-- for attaching volume command is
+docker run -d -P -v volumebyjyoti:/var/logs/apache2/ apachelogvolume:v1
+
+#check docker process
+docke ps
+#output as below
+CONTAINER ID   IMAGE                          COMMAND                  CREATED          STATUS          PORTS                   NAMES
+23d3d98dec7b   apachelogvolume:v1             "/usr/sbin/apache2ct…"   8 seconds ago    Up 6 seconds    0.0.0.0:55015->80/tcp   youthful_mcnulty
+
+#run url in browser
+http://localhost:55015/
+
+#now check the log -
+#its not showing on mac
+
+
+#show different files as per environment
+#we created two folders - dev and prod and created two different index.html files in both folders
+#when we run these two containers - we can see two different files 
+docker run -d -P -v /User/jyotipawar/docker-practice/prod:/usr/share/nginx/html nginx
+
+docker run -d -P -v /User/jyotipawar/docker-practice/dev:/usr/share/nginx/html nginx
+
+#how to run multiple containers
+#docker-compose is solution
+
+#we need to install docker-compose separately, it not coming with docker
+docker-compose -v
+
+#run the containers in docker-compose.yml
+docker-compose up
+
+#how to run multiple containers from docker compose-- scaling 
+docker-compose up --scale webserver=2 --scale appserver=2 -d
+#above command start 2 appserver and 2 webserver
+#it gives output on console like 
+*****************************************
+Docker Compose is now in the Docker CLI, try `docker compose up`
+
+Creating docker-practice_appserver_1 ... done
+Creating docker-practice_appserver_2 ... done
+Creating docker-practice_webserver_1 ... done
+Creating docker-practice_webserver_2 ... done
+*****************************************
+
+#we can start zero or multiple containers using --scale 
+docker-compose up --scale webserver=2 --scale appserver=0 -d
+Docker Compose is now in the Docker CLI, try `docker compose up`
+
+Creating docker-practice_webserver_1 ... done
+Creating docker-practice_webserver_2 ... done
+
+
+
+
+
 
 

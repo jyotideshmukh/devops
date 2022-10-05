@@ -1,0 +1,11 @@
+FROM ubuntu:latest
+
+RUN apt-get update
+RUN apt-get install -y apache2 vim
+
+RUN rm /var/www/html/*
+
+RUN echo "Storing apache logs in local volume" > /var/www/html/index.html
+
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+EXPOSE 80
