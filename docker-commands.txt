@@ -66,6 +66,15 @@ EXPOSE 80
 #then build image
 docker build -t jyotingnixauto:v1 .
 
+#now run the docker image
+docker run -d -P jyotingnixauto:v1
+
+docker ps 
+CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS                  PORTS                                                                        NAMES
+eda0818d9e28   jyotingnixauto:v1      "/bin/sh -c '/usr/sb…"   7 seconds ago    Up 5 seconds            0.0.0.0:55001->80/tcp
+
+#run URL
+http://localhost:55001/
 
 
 
