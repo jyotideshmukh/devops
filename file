@@ -1,4 +1,4 @@
 FROM jyotingnixauto:v1
 
-CMD rm /var/www/html/*
-COPY /sites/index.html /var/www/html
+RUN rm /var/www/html/*
+COPY index.html /var/www/html/index.html
