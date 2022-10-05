@@ -236,6 +236,15 @@ Creating docker-practice_webserver_1 ... done
 Creating docker-practice_webserver_2 ... done
 
 
+#to down the containers - use 
+docker-compose down
+Stopping docker-practice_webserver_2 ... done
+Stopping docker-practice_webserver_1 ... done
+Removing docker-practice_webserver_2 ... done
+Removing docker-practice_webserver_1 ... done
+
+
+
 
 
 
