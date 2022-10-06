@@ -90,6 +90,22 @@ sudo bash /tmp/installK8S-v1-23.sh
    #explain replicaset
    kubectl explain replicaset
 
+   #create replicaset
+   kubectl create -f replicaset.yml
+
+   #get list of replicas
+   kubectl get rs
+
+   #get pod
+   kubectl get pods
+
+   #if we delete pod, kubernetis will create another pod to maintain desiered state of number of replicas
+   #how to delete pod
+   kubectl delete pod <podid>
+
+   
+
+
     
 
 

@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: TestingReplica
+spec: 
+  replicas: 3
+  selector: 
+    matchlabels: 
+      app: pscapp
+  template:
+    metadata: 
+      name: one
+      labels:
+        app: pscapp
+    spec:
+      containers:
+        -image: nginx
+         name: webservver
