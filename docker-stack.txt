@@ -1,0 +1,14 @@
+Docker stack is solution for scaling with multiple images
+=========================================================
+
+#create stack.yml
+vi stack.yml
+
+docker stack deploy -c stack.yml mystack
+        docker stack ls
+        docker stack ps mystack
+        docker stack services mystack
+        docker stack rm mystack
+        docker service scale mysvc=3
+
+        

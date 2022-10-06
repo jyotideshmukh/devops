@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: apppod
+  labels:
+    env: prod
+    type: webserver
+spec:
+  containers:
+    -image: nginx
+    -name: ngnixwebserver
+    -image: tomcat
+    -name: appserver  

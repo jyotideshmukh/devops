@@ -58,9 +58,12 @@ docker service create --name loadbal --replicas 3 -p 1234:3000 --constraint node
 #disadvantages of docker swarm -- till now we used only one image, what if we need to run multiple images
 
 
+#nodes will removed from docker swarm cluster, not managed by manager
+docker swarm leave 
 
-Docker stack is solution for scaling with multiple images
-=========================================================
+#manager removes and it serves as independant machine
+docker swarm leave -f
+
 
 
 

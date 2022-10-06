@@ -1,0 +1,107 @@
+#k8s is just management layer
+#can not create images with k8s
+
+#in k8s relation is master and node
+#master has these components but nodes dont have these
+https://github.com/lerndevops/labs/tree/master/kubernetes
+    api-server,
+    scheduler
+    controller  manager
+    etcd
+
+api-server is principle component which takes requests from clients
+schedular identifies the perfect node to create container
+controller manager maintain your desiered state, eg. 10 conatiner
+etcd - small databse, all k8s info saved in this database
+
+api server needs agent on node, 
+    called as kublets(takes instruction from api-server and reports back to api server)
+
+ Every node need docker
+
+ command line utility kubectl, run on master machine, goes to api server
+
+ ## Install Docker
+
+sudo wget https://raw.githubusercontent.com/lerndevops/labs/master/scripts/installDocker.sh -P /tmp
+sudo chmod 755 /tmp/installDocker.sh
+sudo bash /tmp/installDocker.sh
+
+## Install kubeadm,kubelet,kubectl
+
+sudo wget https://raw.githubusercontent.com/lerndevops/labs/master/scripts/installK8S-v1-23.sh -P /tmp
+sudo chmod 755 /tmp/installK8S-v1-23.sh
+sudo bash /tmp/installK8S-v1-23.sh
+
+## Initialize kubernetes Master Node
+ 
+   sudo kubeadm init --ignore-preflight-errors=all
+
+   sudo mkdir -p $HOME/.kube
+   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+   sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+#k8s not giving networking by default
+
+   ## install networking driver -- Weave/flannel/canal/calico etc... 
+   #copied from weave site
+    kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+
+   ## below installs weave networking driver 
+    
+   sudo kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.24.1/manifests/calico.yaml
+
+   # Validate:  kubectl get nodes
+
+   now install token all nodes
+
+   #explanation of pods
+   kubectl explain pod
+
+   #how to create pods
+   kubectl run pod1 --image ngnix
+
+   #get pod list
+   kubectl get pods
+   kubectl get pods -o wide
+   kubectl describe pod <podname>  #in our case its pod1
+
+   #delete pod
+   kubectl delete pod <podname>
+
+   #create pod by declarative syntax
+   vi mypod.yml
+
+   #create pod using yml
+   kubectl create -f mypod.yml 
+
+   #if we dont know the syntax of yml then you can try this command
+   kubectl run pod1 --image nginx --dry-run=client -o yaml
+
+
+   #how to enter into pod
+   kubectl exec -it pod1 --bash #you will inside that container/pod
+   ctrl+pq to come out of pod
+
+
+   #delete all pods
+   kubectl delete pods --all
+
+   #explain replicaset
+   kubectl explain replicaset
+
+    
+
+
+
+
+
+
+
+
+
+   
+
+
+
+

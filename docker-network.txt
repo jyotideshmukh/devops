@@ -1,0 +1,29 @@
+Docker network
+
+#when we command ip a, we can see docker0
+
+#when we install docker , that time docker0 installed and gives ipaddress  series , 
+containers gives ip address with this series only
+ip a
+
+
+#how to create network
+docker network create jyotinetwork
+
+docker run -d -P --name db --jyotinetwork redis
+docker run -d -P --name db --jyotinetwork busybox:1.28 sleep 3600
+
+
+#why we need this network 
+#one container can not communicate with other container with id or name if we go for default network
+#In some cases, we need to communicate with other container ... eg. db
+
+#if we create network and 
+use the created network to run conatiners 
+then they can communication with each other with name of container and ip of container
+
+#in case of docker swarm we should not worry about network as in docker swarm 
+it is mainly using overlay network
+docker network ls
+
+
