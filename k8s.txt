@@ -103,7 +103,48 @@ sudo bash /tmp/installK8S-v1-23.sh
    #how to delete pod
    kubectl delete pod <podid>
 
-   
+
+   #how to scale replicas
+   kubectl scale rs <replicaset name>  --replicas 5
+#then see pods list
+kubectl get pods #it will list 5 pods
+
+#scale down replicas
+kubectl scale rs <replicaset name>  --replicas 2
+
+#then see pods list
+kubectl get pods #it will list 2 pods
+
+#how ro check events on replicaset
+kubectl describe rs <replica name>
+
+#how to delete replica set
+kubectl delete rs <replica name>
+
+#how to access the application from pods, to outside world
+kubectl get pods -o wide # it will display ip address
+
+#how to check, check it with curl, use port numbers ngnix, apache 80, tomcat 8080 etc
+curl <ip>:<port>
+
+#but for outside world , these pods ip will not accessible, 
+   so we need one service object, this service object publish port named as nodeport
+   then master or node can access application on nodeport
+   service will have its own IP and its own port number
+
+#how to expose service
+kubectl expose pod <podname> --name <servicename, eg, sc1> --port 1234 --target-port 80 --type NodePort
+#it will give output as 
+service/sc1 #here sc1 is service name
+
+#default node port range is 30000 to 32767
+
+#describe the kubectl service
+kubectl describe svc svc1
+
+
+
+
 
 
     
