@@ -169,6 +169,52 @@ kubectl run nginxpodbyjyoti --image nginx -n jyotinamespace
 #delete namespace
 kubectl delete ns jyotinamespace
 
+#deployments
+#how to upgarde images to next version in cluster?
+#replica give us high availability and replica give us load balancing also 
+#but still we need deployment
+#Rolling updates means create new pod and delete one --- this process goes further
+#create newer version of pod
+#delete one older version
+#create newer version of pod
+#delete one older version
+#create newer version of pod
+#delete one older version
+....this achieves zero downtime
+
+#how to create deployment
+kubectl create -f deployment.yml
+
+#how to do rollout deployment
+kubectl set image deploy kubeserve app=leaddevops/kubeserve:v2
+kubectl set image deploy <name of deployment> <container_name>=<image> 
+
+#when we create deployemnt, it actually creates replicasets only
+#when we do rollover deployment, 
+   it shows 2 replicaset with one new 
+   and one (old)with 0 desired 0 ready, 0 current and age
+   new one shows how many desiered, how many ready and how many current with age
+
+#we can see status of deployment
+kubectl rollout status deploy <kubeserve>   
+
+#we can see histrory of deployments, it shows how many rollouts happened till now
+kubectl rollout history deploy kubeserve
+kubectl rollout history deploy <deployment name>
+
+#sometimes we may face issues in new version app
+then we can do rollout
+kubectl rollout undo deploy <nameofdeployment>
+
+#we can go back to version 3 to version 1
+kubectl rollout undo deploy kubeserve --to-revision=1
+
+
+
+
+
+
+
 
 
 
