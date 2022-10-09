@@ -142,6 +142,36 @@ service/sc1 #here sc1 is service name
 #describe the kubectl service
 kubectl describe svc svc1
 
+#when we want to create  replicaset and service at a time, then we need to add yml and separate it by "----"
+
+#get all resources in cluster
+kubectl get all
+
+#delete all
+kubectl delete --all
+
+#but it is risk to delete all, we might delete other's pod also in orgnisation
+#so there is concept of namespace
+#by default we can see only content in default name space
+#to list all namespace, command is
+kubectl get ns
+
+#All the system level pods are available in kube-system
+#if we want to fecth pods of any specific namespace then command is
+kubectl get pods -n kube-system
+
+#how to create namespace
+kubectl create ns jyotinamespace
+
+#how to create pod in specific namespace
+kubectl run nginxpodbyjyoti --image nginx -n jyotinamespace
+
+#delete namespace
+kubectl delete ns jyotinamespace
+
+
+
+
 
 
 
